@@ -4,23 +4,42 @@ from core.models import PublishedModel
 
 
 class Category(PublishedModel):
-    title = models.CharField(max_length=256)
-    slug = models.SlugField(max_length=64, unique=True)
-    output_order = models.PositiveSmallIntegerField(default=100)
+    title = models.CharField(max_length=256, verbose_name='Название')
+    slug = models.SlugField(max_length=64, unique=True, verbose_name='Слаг')
+    output_order = models.PositiveSmallIntegerField(default=100, verbose_name='Позиция')
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.title
 
 
 class Topping(PublishedModel):
-    title = models.CharField(max_length=256)
-    slug = models.SlugField(max_length=64, unique=True)
+    title = models.CharField(max_length=256, verbose_name='Название топинга')
+    slug = models.SlugField(max_length=64, unique=True, verbose_name='url')
 
+    class Meta:
+        verbose_name = 'Топинг'
+        verbose_name_plural = 'Топинги'
+
+    def __str__(self):
+        return self.title
 
 class Wrapper(PublishedModel):
-    title = models.CharField(max_length=256)
+    title = models.CharField(max_length=256,verbose_name='обертка')
+    class Meta:
+        verbose_name = 'Обертка'
+        verbose_name_plural = 'Обертки'
+
+    def __str__(self):
+        return self.title
 
 
 class IceCream(PublishedModel):
-    title = models.CharField(max_length=256)
-    description = models.TextField()
+    title = models.CharField(max_length=256, verbose_name='Мороженое')
+    description = models.TextField(verbose_name='Описание')
     wrapper = models.OneToOneField(
         Wrapper,
         on_delete=models.SET_NULL,
@@ -36,3 +55,9 @@ class IceCream(PublishedModel):
     toppings = models.ManyToManyField(Topping)
     is_on_main = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = 'Мороженое'
+        verbose_name_plural = 'Мороженое'
+
+    def __str__(self):
+        return self.title
